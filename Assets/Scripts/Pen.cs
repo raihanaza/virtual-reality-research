@@ -32,12 +32,9 @@ public class Pen : MonoBehaviour
         // button A is used to change colors (right hand)
         // bottom trigger is used to draw (hold and draw)
         bool isGrabbed = grabbable.isGrabbed;
-        bool isRightHandDrawing = isGrabbed && grabbable.grabbedBy == rightHand && OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger);
-        bool isLeftHandDrawing = isGrabbed && grabbable.grabbedBy == leftHand && OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
-        
-        if (grabbable.grabbedBy == rightHand) { Debug.Log("grabbed by right"); } // delete this line
-        if (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger)) { Debug.Log("rtrigger pressed"); } // delete this line
-        
+        bool isRightHandDrawing = isGrabbed && grabbable.grabbedBy == rightHand && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, OVRInput.Controller.RTouch) > 0.0f;
+        bool isLeftHandDrawing = isGrabbed && grabbable.grabbedBy == leftHand && OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, OVRInput.Controller.LTouch) > 0.0f;
+
         if (isRightHandDrawing || isLeftHandDrawing)
         {
             Debug.Log("drawing");
