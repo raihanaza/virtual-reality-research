@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EzySlice; // fruits package import, name of asset folder 
+//using ; // fruits package import, name of asset folder 
 
 public class ObjectSlicer : MonoBehaviour
 {
