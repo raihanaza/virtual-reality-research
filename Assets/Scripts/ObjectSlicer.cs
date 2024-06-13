@@ -8,7 +8,7 @@ public class ObjectSlicer : MonoBehaviour
     public Transform startSlicingPoint;
     public Transform endSlicingPoint;
     public LayerMask sliceableLayer;
-    public VelocityEsimator velocityEstimator;
+    public VelocityEstimator velocityEstimator;
     
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class ObjectSlicer : MonoBehaviour
 
         if (hasHit)
         {
-            Slice(hit.transform.gameObject, hit.point, velocityEstimator.GetVelocityEsimate()); // when hit an object, hiting point of raycast, 
+            Slice(hit.transform.gameObject, hit.point, velocityEstimator.GetVelocityEstimate()); // when hit an object, hiting point of raycast, 
         }
     }
 

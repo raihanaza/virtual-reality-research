@@ -1,4 +1,4 @@
-﻿// thank you to Valem Tutorials for this script! 
+// thank you to Valem Tutorials for this script! 
 
 using UnityEngine;
 using System.Collections;
