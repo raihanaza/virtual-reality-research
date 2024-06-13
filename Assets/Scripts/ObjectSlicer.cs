@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EzySlice; // slicing objects package import, name of asset folder 
+using EzySlice;
+using System.Numerics; // slicing objects package import, name of asset folder 
 
 public class ObjectSlicer : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class ObjectSlicer : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        Vector3 slicingDirection = endSlicingPoint.position - startSlicingPoint.position;
+        UnityEngine.Vector3 slicingDirection = endSlicingPoint.position - startSlicingPoint.position;
         bool hasHit = Physics.Raycast(startSlicingPoint.position, slicingDirection, out hit, slicingDirection.magnitude, sliceableLayer);
 
         if (hasHit)
@@ -29,10 +30,19 @@ public class ObjectSlicer : MonoBehaviour
         }
     }
 
-    void Slice(GameObject target, Vector3 planePosition, Vector3 slicerVelocity)
+    void Slice(GameObject target, UnityEngine.Vector3 planePosition, UnityEngine.Vector3 slicerVelocity)
     {
         Debug.Log("object sliced!!!!");
+
+        UnityEngine.Vector3 slicingDirection = endSlicingPoint.position - startSlicingPoint.position;
+        UnityEngine.Vector3 planeNormal = UnityEngine.Vector3.Cross(slicerVelocity, slicingDirection);
+
+        SlicedHull hull = target.Slice(planePosition, planeNormal);
+
+        if (hull != null)
+        {
+            GameObject upperHull = hull.CreateUpperHull(target);
+            GameObject lowerHull = hull.CreateLowerHull(target);
+        }
     }
 }
-
-
