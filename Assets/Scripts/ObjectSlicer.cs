@@ -1,11 +1,14 @@
+// much thanks to Valem Tutorials in his video Remaking Fruit Ninja
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EzySlice;
-using System.Numerics; // slicing objects package import, name of asset folder 
+using EzySlice; // slicing objects package import, name of asset folder 
 
 public class ObjectSlicer : MonoBehaviour
 {
+    public float slicedObjectInitialVelocity = 100;
+    public Material slicedMaterial; // helps to render sliced object so not just pink 
     public Transform startSlicingPoint;
     public Transform endSlicingPoint;
     public LayerMask sliceableLayer;
@@ -37,12 +40,12 @@ public class ObjectSlicer : MonoBehaviour
         UnityEngine.Vector3 slicingDirection = endSlicingPoint.position - startSlicingPoint.position;
         UnityEngine.Vector3 planeNormal = UnityEngine.Vector3.Cross(slicerVelocity, slicingDirection);
 
-        SlicedHull hull = target.Slice(planePosition, planeNormal);
+        SlicedHull hull = target.Slice(planePosition, planeNormal, slicedMaterial);
 
         if (hull != null)
         {
-            GameObject upperHull = hull.CreateUpperHull(target);
-            GameObject lowerHull = hull.CreateLowerHull(target);
+            GameObject upperHull = hull.CreateUpperHull(target, slicedMaterial);
+            GameObject lowerHull = hull.CreateLowerHull(target, slicedMaterial);
 
             CreateSlicedComponent(upperHull);
             CreateSlicedComponent(lowerHull);
@@ -58,7 +61,9 @@ public class ObjectSlicer : MonoBehaviour
         MeshCollider collider = slicedHull.AddComponent<MeshCollider>(); 
         collider.convex = true;
 
-        Destroy(slicedHull, 4); // destry after 4 seconds 
+        rb.AddExplosionForce(slicedObjectInitialVelocity, slicedHull.transform.position, 1); // when slicing object, makes it move in opposite direction
+
+        Destroy(slicedHull, 4); // destroy the sliced object after 4 seconds 
 
     }
 }
