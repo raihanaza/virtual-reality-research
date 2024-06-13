@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-
+    public float velocityIntensity; 
     public GameObject[] prefabs;
     public Transform[] spawnPoints;
     public float spawnTimer = 2; // how often a new object generates to user in seconds
@@ -30,6 +30,10 @@ public class Spawner : MonoBehaviour
 
             // reset timer 
             timer -= spawnTimer;
+
+            // to make the objects move towards user after spawn
+            Rigidbody rb = spawnedPrefab.GetComponent<Rigidbody>();
+            rb.velocity = randomPoint.forward * velocityIntensity; 
         }
     }
 }
