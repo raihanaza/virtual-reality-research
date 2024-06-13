@@ -43,6 +43,22 @@ public class ObjectSlicer : MonoBehaviour
         {
             GameObject upperHull = hull.CreateUpperHull(target);
             GameObject lowerHull = hull.CreateLowerHull(target);
+
+            CreateSlicedComponent(upperHull);
+            CreateSlicedComponent(lowerHull);
+
+            // destroy initial game object to 'slice'
+            Destroy(target);
         }
+    }
+
+    void CreateSlicedComponent(GameObject slicedHull)
+    {
+        Rigidbody rb = slicedHull.AddComponent<Rigidbody>();
+        MeshCollider collider = slicedHull.AddComponent<MeshCollider>(); 
+        collider.convex = true;
+
+        Destroy(slicedHull, 4); // destry after 4 seconds 
+
     }
 }
