@@ -29,7 +29,10 @@ public class ObjectSlicer : MonoBehaviour
 
         if (hasHit)
         {
-            Slice(hit.transform.gameObject, hit.point, velocityEstimator.GetVelocityEstimate()); // when hit an object, hiting point of raycast, 
+            if (hit.transform.gameObject.layer == 9)
+                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            else
+                Slice(hit.transform.gameObject, hit.point, velocityEstimator.GetVelocityEstimate()); // when hit an object, hiting point of raycast, 
         }
     }
 
@@ -44,6 +47,9 @@ public class ObjectSlicer : MonoBehaviour
 
         if (hull != null)
         {
+
+            DisplayScore.score++; // adding 1 point to score for each slice
+
             GameObject upperHull = hull.CreateUpperHull(target, slicedMaterial);
             GameObject lowerHull = hull.CreateLowerHull(target, slicedMaterial);
 
